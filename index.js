@@ -12,11 +12,10 @@ function getNativeBinary() {
         `${BASE_DIR}/${PLATFORM}_${ARCH}/clang-format`,
         PLATFORM === 'win32' ? `${BASE_DIR}/win32/clang-format.exe` : null,
         PLATFORM === 'darwin' && ARCH === 'arm64' ? `${BASE_DIR}/darwin_x64/clang-format` : null
-    ].filter(Boolean);
-
+    ].filter(Boolean).map(binary => path.resolve(__dirname, binary));
     for (const binary of possibleBinaries) {
         if (fs.existsSync(binary)) {
-            return path.resolve(__dirname, binary);
+            return binary;
         }
     }
 
@@ -34,4 +33,4 @@ function main() {
     }
 }
 
-if (require.main === module) main();
+module.exports = main;
