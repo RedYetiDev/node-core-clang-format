@@ -1,6 +1,6 @@
 {
   "name": "node-core-clang-format",
-  "version": "0.0.4",
+  "version": "32d3ac78",
   "keywords": [],
   "author": "RedYetiDev <redyetidev@gmail.com>",
   "license": "MIT",
@@ -8,5 +8,8 @@
   "bin": {
     "clang-format": "executable.js",
     "git-clang-format": "binaries/git-clang-format"
+  },
+  "devDependencies": {
+    "octokit": "^4.0.2"
   }
 }

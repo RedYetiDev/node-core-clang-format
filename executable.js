@@ -1,2 +1,6 @@
 #!/usr/bin/env node
-require('node-core-clang-format')();
+try {
+    require('node-core-clang-format')();
+} catch {
+    require('.')();
+}
