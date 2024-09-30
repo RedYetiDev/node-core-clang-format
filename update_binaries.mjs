@@ -30,7 +30,7 @@ const assets = await octokit.paginate(octokit.rest.repos.listReleaseAssets, {
 });
 
 // git-clang-format
-const gcfUrl = 'https://raw.githubusercontent.com/llvm/llvm-project/refs/heads/main/clang/tools/clang-format/git-clang-format';
+const gcfUrl = 'https://raw.githubusercontent.com/llvm/llvm-project/refs/heads/release/18.x/clang/tools/clang-format/git-clang-format';
 await downloadWithWget(gcfUrl, './binaries/git-clang-format');
 
 // Binaries
