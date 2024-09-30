@@ -1,6 +1,4 @@
 import { Octokit } from "octokit";
-import pkgJSON from './package.json' with { type: 'json' };
-import fs from 'node:fs/promises';
 import { exec } from 'node:child_process';
 
 const octokit = new Octokit();
@@ -54,6 +52,3 @@ for (const [folder, file, extension = ''] of binaries) {
         console.error(`Binary for ${file} not found`);
     }
 }
-
-pkgJSON.version = latestRelease.tag_name.split('-')[1];
-await fs.writeFile('package.json', JSON.stringify(pkgJSON, null, 2));
