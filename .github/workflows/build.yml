@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos, linux]
+        os: [linux]
 
     runs-on: ubuntu-latest
 
@@ -22,7 +22,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build
-          mkdir llvm-project/build && cd llvm-project/build
+          mkdir llvm-project/build
+          cd llvm-project/build
+          echo $(pwd)
 
       - name: Configure and Build (MacOS)
         if: ${{ matrix.os == 'macos' }}
