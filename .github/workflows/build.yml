@@ -23,7 +23,7 @@ jobs:
         run: |
           mkdir llvm-project/build
           if [ "${{ matrix.os }}" == "windows" ]; then
-            choco install ninja
+            choco install ninja -y
           else
             sudo apt-get update
             sudo apt-get install -y ninja-build
