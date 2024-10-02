@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [macos, linux]
 
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
