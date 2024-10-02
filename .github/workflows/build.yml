@@ -14,12 +14,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
           path: llvm-project
 
       - name: Prep
         run: |
+          mkdir llvm-project/build
           sudo apt-get update
           sudo apt-get install -y ninja-build
 
