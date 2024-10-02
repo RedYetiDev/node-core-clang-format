@@ -16,12 +16,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
+          path: llvm-project
 
       - name: Prep
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build
-          mkdir build && cd build
+          mkdir llvm-project/build && cd llvm-project/build
 
       - name: Configure and Build (MacOS)
         if: ${{ matrix.os == 'macos' }}
@@ -50,4 +51,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: clang-format-${{ matrix.os }}
-          path: build/bin/clang-format
+          path: llvm-project/build/bin/clang-format
