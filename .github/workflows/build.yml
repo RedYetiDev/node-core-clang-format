@@ -22,12 +22,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build
-          mkdir llvm-project/build
-          cd llvm-project/build
-          echo $(pwd)
 
       - name: Configure and Build (MacOS)
         if: ${{ matrix.os == 'macos' }}
+        working-directory: llvm-project/build
         run: |
           cmake -G Ninja \
               -DCMAKE_BUILD_TYPE=MinSizeRel \
@@ -40,6 +38,7 @@ jobs:
 
       - name: Configure and Build (Linux)
         if: ${{ matrix.os == 'linux' }}
+        working-directory: llvm-project/build
         run: |
           cmake -G Ninja \
               -DCMAKE_BUILD_TYPE=MinSizeRel \
