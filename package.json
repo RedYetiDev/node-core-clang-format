@@ -1,15 +1,12 @@
 {
   "name": "node-core-clang-format",
-  "version": "0.0.6",
-  "keywords": [],
+  "version": "19.1.1",
+  "keywords": ["clang-format"],
   "author": "RedYetiDev <redyetidev@gmail.com>",
   "license": "MIT",
   "description": "A clang-format fork for Node.js",
   "bin": {
-    "clang-format": "executable.js",
+    "clang-format": "src/executable.js",
     "git-clang-format": "binaries/git-clang-format"
-  },
-  "devDependencies": {
-    "octokit": "^4.0.2"
   }
 }
