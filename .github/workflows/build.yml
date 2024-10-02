@@ -8,46 +8,47 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [linux]
+        os: [windows]
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os == 'windows' && 'windows-latest' || 'ubuntu-latest' }}
 
     steps:
-      - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
           path: llvm-project
 
       - name: Prep
+        shell: bash
         run: |
           mkdir llvm-project/build
-          sudo apt-get update
-          sudo apt-get install -y ninja-build
+          if [ "${{ matrix.os }}" == "windows" ]; then
+            choco install ninja
+          else
+            sudo apt-get update
+            sudo apt-get install -y ninja-build
+          fi
 
-      - name: Configure and Build (MacOS)
-        if: ${{ matrix.os == 'macos' }}
+      - name: Configure and Build
+        shell: bash
         working-directory: llvm-project/build
         run: |
-          cmake -G Ninja \
-              -DCMAKE_BUILD_TYPE=MinSizeRel \
-              -DLLVM_ENABLE_PROJECTS=clang \
-              -DLLVM_TARGET_ARCH=x86_64 \
-              -DLLVM_DEFAULT_TARGET_TRIPLE=x86_64-apple-darwin \
-              -DCMAKE_OSX_ARCHITECTURES=x86_64 \
-              ../llvm
-          ninja clang-format
-
-      - name: Configure and Build (Linux)
-        if: ${{ matrix.os == 'linux' }}
-        working-directory: llvm-project/build
-        run: |
-          cmake -G Ninja \
-              -DCMAKE_BUILD_TYPE=MinSizeRel \
-              -DLLVM_BUILD_STATIC=true \
-              -DLLVM_ENABLE_ZLIB=no \
-              -DLLVM_ENABLE_PROJECTS=clang \
-              ../llvm
+          if [ "${{ matrix.os }}" == "macos" ]; then
+            cmake -G Ninja \
+                -DCMAKE_BUILD_TYPE=MinSizeRel \
+                -DLLVM_ENABLE_PROJECTS=clang \
+                -DLLVM_TARGET_ARCH=x86_64 \
+                -DLLVM_DEFAULT_TARGET_TRIPLE=x86_64-apple-darwin \
+                -DCMAKE_OSX_ARCHITECTURES=x86_64 \
+                ../llvm
+          else
+            cmake -G Ninja \
+                -DCMAKE_BUILD_TYPE=MinSizeRel \
+                -DLLVM_BUILD_STATIC=true \
+                -DLLVM_ENABLE_ZLIB=no \
+                -DLLVM_ENABLE_PROJECTS=clang \
+                ../llvm
+          fi
           ninja clang-format
 
       - name: Upload binary
