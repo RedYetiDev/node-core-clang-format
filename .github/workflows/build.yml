@@ -2,7 +2,10 @@ name: Build
 
 on:
   workflow_dispatch:
-
+    inputs:
+      ref:
+        type: string
+        default: main
 jobs:
   build:
     strategy:
@@ -17,6 +20,7 @@ jobs:
         with:
           repository: llvm/llvm-project
           path: llvm-project
+          ref: ${{ github.event.inputs.ref }}
 
       - name: Prep
         shell: bash
@@ -54,5 +58,5 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: clang-format-${{ matrix.os }}
+          name: clang-format-${{ github.event.inputs.ref }}-${{ matrix.os }}
           path: ${{ matrix.os == 'windows' && 'llvm-project/build/bin/clang-format.exe' || 'llvm-project/build/bin/clang-format' }}
